@@ -30,9 +30,18 @@ def lightsensor_callback(data):
     lightsensors.left_forward = data.left_forward
     lightsensors.right_forward = data.right_forward
 
+def oneframe(p):
+    int t=0
+    t=(5*3.14*p)/(400*18)
+    raw_control(p,p)
+    time.sleep(t)
+
 if __name__ == '__main__':
     rospy.init_node('one_frame')
     sub = rospy.Subscriber('/raspimouse/lightsensors', LightSensorValue, lightsensor_callback)
 
     while not rospy.is_shutdown():
-
+        try:
+            raw_input('Press Enter')
+            oneframe(300)
+        except
