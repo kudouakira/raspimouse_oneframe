@@ -17,12 +17,14 @@ def switch_motors(onoff):
     else:
         return False
     
-def raw_control(left_hz,right_hz):
+def raw_control(left_hz,right_hz)
+    pub = rospy.Publisher('/raspimouse/motor_raw', LeftRightFreq, queue_size=10)
+
     if not rospy.is_shutdown():
-        d = LeftRightFreqs()
+        d = LeftRightFreq()
         d.left = left_hz
         d.right = right_hz
-        pub_motor.publish(d)
+        pub.publish(d)
 
 def lightsensor_callback(data):
     lightsensors.left_side = data.left_side
@@ -36,12 +38,21 @@ def oneframe(p):
     raw_control(p,p)
     time.sleep(t)
 
+def stop_motor():
+    raw_control(0,0)
+    switch_motors(Fales)
+
 if __name__ == '__main__':
     rospy.init_node('one_frame')
     sub = rospy.Subscriber('/raspimouse/lightsensors', LightSensorValue, lightsensor_callback)
 
     while not rospy.is_shutdown():
         try:
-            raw_input('Press Enter')
-            oneframe(300)
-        except
+            #raw_input('Press Enter')
+            #oneframe(300)
+            raw_control(300,300)
+            time.sleep(3)
+        except rospy.KeyboardInterrupt:
+            break
+
+    stop_motor()   
