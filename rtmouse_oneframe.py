@@ -2,9 +2,9 @@
 
 import sys, time
 import rospy
-from raspimouse_ros.srv import import *
-from raspimouse_ros.msg import import *
-from std_msgs.msg import import UInt16
+from raspimouse_ros.srv import *
+from raspimouse_ros.msg import *
+from std_msgs.msg import UInt16
 
 def switch_motors(onoff):
     rospy.wait_for_service('/raspimouse/switch_motors')
